@@ -1,0 +1,36 @@
+services: docker
+language: python
+python:
+  - '3.6'
+
+env:
+  global:
+    - VERSION=0.11.66
+    - OVERLAY_VERSION=1.21.4.0
+  matrix:
+    - ARCH=i386    OVERLAY_ARCH=x86
+    - ARCH=amd64   OVERLAY_ARCH=amd64
+    - ARCH=aarch64 OVERLAY_ARCH=aarch64
+
+install:
+  - pip install -r requirements-test.txt
+
+before_script:
+  - ./build.sh $ARCH
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
+script:
+  - pytest -v test.py
+  - docker build -t robertbeal/gogs:$ARCH -t robertbeal/gogs:$ARCH.$VERSION --build-arg=VERSION=$VERSION --build-arg=OVERLAY_VERSION=$OVERLAY_VERSION --build-arg=ARCH=$SYNCTHING_ARCH --build-arg=OVERLAY_ARCH=$OVERLAY_ARCH --file Dockerfile.$ARCH .
+  - docker run -d --name=gogs-$ARCH --health-cmd="curl --fail http://localhost:3000/healthcheck || exit 1" --health-interval=5s --health-retries=3 robertbeal/gogs:$ARCH
+  - sleep 15
+  - if [[ -z 'docker ps --filter="name=gogs-$ARCH" --filter="health=healthy" -q' ]]; then exit 1; fi
+
+deploy:
+  provider: script
+  script:
+    echo "$DOCKER_PWD" | docker login -u "$DOCKER_USER" --password-stdin &&
+    docker push robertbeal/gogs:$ARCH &&
+    docker push robertbeal/gogs:$ARCH.$VERSION;
+  on:
+    branch: master

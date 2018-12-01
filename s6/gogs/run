@@ -1,0 +1,16 @@
+#!/bin/sh
+
+export USER=git
+export HOME=/data
+
+if [[ -n "${GID}" ]]; then
+    groupmod -o -g $GID git
+fi
+
+if [[ -n "${UID}" ]]; then
+    usermod -o -u $UID git
+fi
+
+chmod 700 /data/.ssh
+
+exec s6-setuidgid $USER /app/gogs web --config /config/app.ini
