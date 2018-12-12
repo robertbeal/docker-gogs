@@ -24,7 +24,7 @@ def test_cron_process(host):
     assert host.process.get(user='root', comm='crond').args == '/usr/sbin/crond -fS'
 
 def test_version(host):
-    assert os.environ.get('VERSION','0.11.66') in host.check_output("/app/gogs --version")
+    assert os.environ.get('VERSION','0.11.79') in host.check_output("/app/gogs --version")
 
 def test_port(host):
     assert host.socket("tcp://0.0.0.0:3000").is_listening

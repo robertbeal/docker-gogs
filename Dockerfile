@@ -2,7 +2,7 @@ FROM alpine:3.8
 LABEL maintainer="github.com/robertbeal"
 
 ARG ARCH=amd64
-ARG VERSION=0.11.66
+ARG VERSION=0.11.79
 ARG OVERLAY_VERSION=1.21.4.0
 ARG OVERLAY_ARCH=amd64
 ENV GOPATH /gopath
