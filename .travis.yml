@@ -5,8 +5,8 @@ python:
 
 env:
   global:
-    - VERSION=0.11.79
-    - OVERLAY_VERSION=1.21.4.0
+    - VERSION=0.11.86
+    - OVERLAY_VERSION=1.21.7.0
   matrix:
     - ARCH=i386    OVERLAY_ARCH=x86
     - ARCH=amd64   OVERLAY_ARCH=amd64
