@@ -1,7 +1,7 @@
 services: docker
 language: python
 python:
-  - '3.6'
+  - "3.6"
 
 env:
   global:
@@ -12,15 +12,23 @@ env:
     - ARCH=amd64   OVERLAY_ARCH=amd64
     - ARCH=aarch64 OVERLAY_ARCH=aarch64
 
+    - ARCH=i386 FILE=386
+    - ARCH=amd64 FILE=amd64
+    - ARCH=arm FILE=armv5
+    - ARCH=aarch64 FILE=arm64
+
 install:
-  - pip install -r requirements-test.txt
+  - pip install --upgrade pip pipenv
+  - export PIPENV_IGNORE_VIRTUALENVS=1
+  - pipenv sync --dev
+  - pipenv check
 
 before_script:
   - ./build.sh $ARCH
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
 script:
-  - pytest -v test.py
+  - pipenv run pytest -v
   - docker build -t robertbeal/gogs:$ARCH -t robertbeal/gogs:$ARCH.$VERSION --build-arg=VERSION=$VERSION --build-arg=OVERLAY_VERSION=$OVERLAY_VERSION --build-arg=ARCH=$SYNCTHING_ARCH --build-arg=OVERLAY_ARCH=$OVERLAY_ARCH --file Dockerfile.$ARCH .
   - docker run -d --name=gogs-$ARCH --health-cmd="curl --fail http://localhost:3000/healthcheck || exit 1" --health-interval=5s --health-retries=3 robertbeal/gogs:$ARCH
   - sleep 15
