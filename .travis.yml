@@ -17,15 +17,12 @@ env:
     - ARCH=arm FILE=armv5
     - ARCH=aarch64 FILE=arm64
 
-install:
-  - pip install --upgrade pip pipenv
-  - export PIPENV_IGNORE_VIRTUALENVS=1
-
 before_script:
   - ./build.sh $ARCH
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
 script:
+  - pip install --upgrade pip pipenv
   - pipenv run pytest -v
   - docker build -t robertbeal/gogs:$ARCH -t robertbeal/gogs:$ARCH.$VERSION --build-arg=VERSION=$VERSION --build-arg=OVERLAY_VERSION=$OVERLAY_VERSION --build-arg=ARCH=$SYNCTHING_ARCH --build-arg=OVERLAY_ARCH=$OVERLAY_ARCH --file Dockerfile.$ARCH .
   - docker run -d --name=gogs-$ARCH --health-cmd="curl --fail http://localhost:3000/healthcheck || exit 1" --health-interval=5s --health-retries=3 robertbeal/gogs:$ARCH
