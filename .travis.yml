@@ -20,8 +20,6 @@ env:
 install:
   - pip install --upgrade pip pipenv
   - export PIPENV_IGNORE_VIRTUALENVS=1
-  - pipenv sync --dev
-  - pipenv check
 
 before_script:
   - ./build.sh $ARCH
