@@ -6,16 +6,12 @@ python:
 env:
   global:
     - VERSION=0.11.86
-    - OVERLAY_VERSION=1.21.7.0
+    - OVERLAY_VERSION=1.22.1.0
   matrix:
-    - ARCH=i386    OVERLAY_ARCH=x86
-    - ARCH=amd64   OVERLAY_ARCH=amd64
-    - ARCH=aarch64 OVERLAY_ARCH=aarch64
-
-    - ARCH=i386 FILE=386
-    - ARCH=amd64 FILE=amd64
-    - ARCH=arm FILE=armv5
-    - ARCH=aarch64 FILE=arm64
+    - ARCH=i386 FILE=386 OVERLAY_ARCH=x86
+    - ARCH=amd64 FILE=amd64 OVERLAY_ARCH=amd64
+    - ARCH=arm FILE=armv5 OVERLAY_ARCH=arm
+    - ARCH=aarch64 FILE=arm64 OVERLAY_ARCH=aarch64
 
 install:
   - pip install --upgrade pip pipenv
