@@ -5,7 +5,7 @@ python:
 
 env:
   global:
-    - VERSION=0.11.86
+    - VERSION=0.11.91
     - OVERLAY_VERSION=1.22.1.0
   matrix:
     - ARCH=i386 FILE=386 OVERLAY_ARCH=x86

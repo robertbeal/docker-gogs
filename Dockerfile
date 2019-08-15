@@ -1,8 +1,8 @@
-FROM alpine:3.9
+FROM alpine:latest
 LABEL maintainer="github.com/robertbeal"
 
 ARG ARCH=amd64
-ARG VERSION=0.11.86
+ARG VERSION=0.11.91
 ARG OVERLAY_VERSION=1.21.7.0
 ARG OVERLAY_ARCH=amd64
 ENV GOPATH /gopath
@@ -26,9 +26,9 @@ RUN apk add --no-cache \
     && usermod -p '*' git \
     && passwd -u git \
     && apk add --no-cache --virtual=build-dependencies \
-        alpine-sdk \
-        go \
-        linux-pam-dev \
+    alpine-sdk \
+    go \
+    linux-pam-dev \
     && curl -L "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${OVERLAY_ARCH}.tar.gz" | tar zx -C / \
     && curl -L https://github.com/gogs/gogs/archive/v$VERSION.tar.gz | tar zx \
     && mv gogs-$VERSION/* . \
