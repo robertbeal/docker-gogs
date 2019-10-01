@@ -10,8 +10,7 @@ env:
   matrix:
     - ARCH=i386 FILE=386 OVERLAY_ARCH=x86
     - ARCH=amd64 FILE=amd64 OVERLAY_ARCH=amd64
-    - ARCH=arm FILE=armv5 OVERLAY_ARCH=armhf
-    - ARCH=aarch64 FILE=arm64 OVERLAY_ARCH=aarch64
+    - ARCH=armv7 FILE=armv7 OVERLAY_ARCH=armhf
 
 install:
   - pip install --upgrade pip pipenv
