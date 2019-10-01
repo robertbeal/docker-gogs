@@ -1,7 +1,6 @@
 FROM alpine:latest
 LABEL maintainer="github.com/robertbeal"
 
-ARG ARCH=amd64
 ARG VERSION=0.11.91
 ARG OVERLAY_VERSION=1.21.7.0
 ARG OVERLAY_ARCH=amd64
