@@ -34,4 +34,4 @@ deploy:
     docker push robertbeal/gogs:$ARCH &&
     docker push robertbeal/gogs:$ARCH.$VERSION;
   on:
-    branch: master
+    branch: main
