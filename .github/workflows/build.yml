@@ -15,6 +15,6 @@ jobs:
     steps:
       - name: test
         run: |
-          pip install --upgrade pip pipenv
+          pip3 install --upgrade pip pipenv
           pipenv sync --dev
           pipenv run pytest -v
