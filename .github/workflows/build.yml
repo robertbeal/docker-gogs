@@ -20,6 +20,6 @@ jobs:
           python-version: 3.8
       - name: test
         run: |
-          pip3 install --upgrade pip pipenv
+          pip install --upgrade pip pipenv
           pipenv sync --dev
           pipenv run pytest -v
