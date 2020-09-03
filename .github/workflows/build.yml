@@ -1,0 +1,20 @@
+name: Build
+
+on:
+  push:
+      paths-ignore:
+        - '**/*.md'
+        - '.gitignore'
+        - '.dependabot/**'
+  schedule:
+    - cron: "0 10 * * 1" # every monday at 10am
+
+jobs:
+  staging:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: |
+          pip install --upgrade pip pipenv
+          pipenv sync --dev
+          pipenv run pytest -v
