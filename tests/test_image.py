@@ -31,7 +31,7 @@ def test_cron_process(host):
 
 
 def test_version(host):
-    assert os.environ.get('VERSION', '0.12.1') in host.check_output(
+    assert os.environ.get('VERSION', '0.12.2') in host.check_output(
         "/app/gogs --version")
 
 
