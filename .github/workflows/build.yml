@@ -10,7 +10,7 @@ on:
     - cron: "0 10 * * 1" # every monday at 10am
 
 jobs:
-  staging:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,6 +20,7 @@ jobs:
           python-version: 3.8
       - name: test
         run: |
+          cd tests
           pip install --upgrade pip pipenv
           pipenv sync --dev
-          pipenv run pytest -v
+          pipenv run test
