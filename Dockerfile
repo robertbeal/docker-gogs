@@ -22,11 +22,11 @@ ARG UID=801
 ARG GID=801
 
 WORKDIR /app
-
-COPY --from=builder /gopath/src/github.com/gogs/gogs/gogs /app
-COPY --from=builder /gopath/src/github.com/gogs/gogs/public /app/public
-COPY --from=builder /gopath/src/github.com/gogs/gogs/scripts /app/scripts
-COPY --from=builder /gopath/src/github.com/gogs/gogs/templates /app/templates
+COPY --from=builder /gopath/src/github.com/gogs/gogs/gogs .
+COPY --from=builder /gopath/src/github.com/gogs/gogs/public ./public
+COPY --from=builder /gopath/src/github.com/gogs/gogs/scripts ./scripts
+COPY --from=builder /gopath/src/github.com/gogs/gogs/templates ./templates
+COPY src /etc
 
 RUN apk add --no-cache \
     bash \
@@ -40,10 +40,10 @@ RUN apk add --no-cache \
     && usermod -p '*' git \
     && passwd -u git \
     && wget -qO- "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${OVERLAY_ARCH}.tar.gz" | tar vxz -C / \
+    && mkdir -p ./log \
     && chown -R git:git . \
-    && chmod 550 -R .
-
-COPY src /etc
+    && chmod -R 550 . \
+    && chmod 770  log
 
 HEALTHCHECK --interval=30s --retries=3 CMD wget --spider http://localhost:3000/healthcheck || exit 1
 VOLUME /config /data
