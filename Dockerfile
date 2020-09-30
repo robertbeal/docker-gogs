@@ -8,7 +8,7 @@ RUN apk add --no-cache \
 
 WORKDIR /gopath/src/github.com/gogs/gogs
 
-RUN set -o pipefail 
+# hadolint ignore=DL4006
 RUN curl -L https://github.com/gogs/gogs/archive/v0.12.2.tar.gz | tar zx
 RUN mv gogs-0.12.2/* .
 RUN go get -v -tags "sqlite redis memcache cert pam"
@@ -37,7 +37,7 @@ COPY --from=builder /gopath/src/github.com/gogs/gogs/scripts ./scripts
 COPY --from=builder /gopath/src/github.com/gogs/gogs/templates ./templates
 COPY src /etc
 
-# hadolint ignore=DL3018
+# hadolint ignore=DL3018,DL4006
 RUN apk add --no-cache \
     bash \
     ca-certificates \
@@ -49,7 +49,6 @@ RUN apk add --no-cache \
     && adduser -s /bin/bash -D -h /data -u $UID -G git git \
     && usermod -p '*' git \
     && passwd -u git \
-    && set -o pipefail \
     && wget -qO- "https://github.com/just-containers/s6-overlay/releases/download/v${OVERLAY_VERSION}/s6-overlay-${OVERLAY_ARCH}.tar.gz" | tar vxz -C / \
     && mkdir -p ./log \
     && chown -R git:git . \
