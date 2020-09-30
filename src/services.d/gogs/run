@@ -3,12 +3,12 @@
 export USER=git
 export HOME=/data
 
-if [[ -n "${GID}" ]]; then
-    groupmod -o -g $GID git
+if [ -n "${GID}" ]; then
+    groupmod -o -g "$GID" git
 fi
 
-if [[ -n "${UID}" ]]; then
-    usermod -o -u $UID git
+if [ -n "${UID}" ]; then
+    usermod -o -u "$UID" git
 fi
 
 chmod 700 /data/.ssh

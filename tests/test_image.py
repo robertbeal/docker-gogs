@@ -6,14 +6,16 @@ import testinfra
 
 @pytest.fixture(scope='session')
 def host(request):
-    subprocess.check_call(['docker', 'build', '-t', 'image-under-test', '.'])
-    docker_id = subprocess.check_output(
-        ['docker', 'run', '--rm', '-d', 'image-under-test']).decode().strip()
+    # set the working directory to where the Dockerfile lives
+    path = os.path.dirname(os.path.abspath(__file__)) + "/../"
 
-    yield testinfra.get_host("docker://" + docker_id)
+    subprocess.check_call(['docker', 'build', '-t', 'robertbeal/gogs', '.'], cwd=path)
+    id = subprocess.check_output(
+        ['docker', 'run', '--rm', '-d', 'robertbeal/gogs'], cwd=path).decode().strip()
 
-    # teardown
-    subprocess.check_call(['docker', 'rm', '-f', docker_id])
+    yield testinfra.get_host("docker://" + id)
+
+    subprocess.check_call(['docker', 'rm', '-f', id])
 
 
 def test_system(host):
@@ -31,8 +33,7 @@ def test_cron_process(host):
 
 
 def test_version(host):
-    assert os.environ.get('VERSION', '0.12.2') in host.check_output(
-        "/app/gogs --version")
+    assert os.environ.get('VERSION', '0.12.2') in host.check_output("/app/gogs --version")
 
 
 def test_port(host):
@@ -57,10 +58,17 @@ def test_app_folder(host):
     assert oct(host.file(folder).mode) == '0o550'
 
 
+def test_ssh_config(host):
+    host.file("/etc/ssh/sshd_config").exists
+
+
+def test_nsswitch_config(host):
+    host.file("/etc/nsswitch.conf").exists
+
+
 @pytest.mark.parametrize('package', [
     ('bash'),
     ('ca-certificates'),
-    ('curl'),
     ('linux-pam'),
     ('openssh'),
     ('shadow'),

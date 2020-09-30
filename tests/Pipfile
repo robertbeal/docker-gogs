@@ -8,3 +8,6 @@ name = "pypi"
 [dev-packages]
 pytest = "*"
 testinfra = "*"
+
+[scripts]
+test = "pytest -v" 
