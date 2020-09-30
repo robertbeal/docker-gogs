@@ -31,7 +31,7 @@ jobs:
           pip install --upgrade pip pipenv
           pipenv sync --dev
           pipenv run test
-          docker run -d --name=gogs robertbeal/gogs && sleep 5
+          docker run -d --name=gogs robertbeal/gogs && sleep 60
           if [ -z 'docker ps --filter="name=gogs" --filter="health=healthy" -q' ]; then exit 1; fi
 
   build:
