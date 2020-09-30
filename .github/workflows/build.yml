@@ -2,10 +2,10 @@ name: build
 
 on:
   push:
-      paths-ignore:
-        - '**/*.md'
-        - '.gitignore'
-        - '.dependabot/**'
+    paths-ignore:
+      - "**/*.md"
+      - ".gitignore"
+      - ".dependabot/**"
   schedule:
     - cron: "0 10 * * 1" # every monday at 10am
 
@@ -31,8 +31,8 @@ jobs:
           pip install --upgrade pip pipenv
           pipenv sync --dev
           pipenv run test
-          docker run -d --name=gogs robertbeal/gogs
-          if [[ -z 'docker ps --filter="name=gogs" --filter="health=healthy" -q' ]]; then exit 1; fi
+          docker run -d --name=gogs robertbeal/gogs && sleep 5
+          if [ -z 'docker ps --filter="name=gogs" --filter="health=healthy" -q' ]; then exit 1; fi
 
   build:
     runs-on: ubuntu-latest

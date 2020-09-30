@@ -55,7 +55,7 @@ RUN apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/te
   && chmod -R 550 . \
   && chmod 770  log
 
-HEALTHCHECK --interval=30s --retries=3 CMD wget --spider http://localhost:3000/healthcheck || exit 1
+HEALTHCHECK --interval=30s --retries=3 CMD wget --spider http://localhost:3000 || exit 1
 VOLUME /config /data
 EXPOSE 22222 3000
 
