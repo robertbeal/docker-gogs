@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/robertbeal/docker-gogs.svg?branch=master)](https://travis-ci.org/robertbeal/gogs)
+![build](https://github.com/robertbeal/docker-gogs/workflows/build/badge.svg)
 [![](https://images.microbadger.com/badges/image/robertbeal/gogs.svg)](https://microbadger.com/images/robertbeal/gogs "Get your own image badge on microbadger.com")
 [![](https://images.microbadger.com/badges/version/robertbeal/gogs.svg)](https://microbadger.com/images/robertbeal/gogs "Get your own version badge on microbadger.com")
 [![](https://img.shields.io/docker/pulls/robertbeal/gogs.svg)](https://hub.docker.com/r/robertbeal/gogs/)
