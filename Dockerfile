@@ -1,6 +1,6 @@
 FROM golang:1.15-alpine3.12 AS builder
 
-ARG VERSION=v0.12.3
+ARG VERSION=v0.12.4
 
 # hadolint ignore=DL3018
 RUN apk add --no-cache \
