@@ -7,7 +7,7 @@
 
 # Gogs
 
-A production optimised version of [Gogs](https://github.com/gogits/gogs), able to run in `--read-only` mode. The only caveat is that you need to mount the s6 volume (to make it writable) as s6 will need to do some writing.
+A production optimised, multi-arch version of [Gogs](https://github.com/gogits/gogs), able to run in `--read-only` mode. The only caveat is that you need to mount the s6 volume (to make it writable) as s6 will need to do some writing.
 
 Other services that run on the image:
 
